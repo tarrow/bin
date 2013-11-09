@@ -1,2 +1,1 @@
-bin
-===
+A collection of Bash scripts I've written and use on a semi-regular basis.
