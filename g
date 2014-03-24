@@ -22,6 +22,9 @@ case "$command" in
 "co" | "checkout" )
     git checkout $param
     ;;
+"c" | "commit" )
+    git commit -a
+    ;;
 "pu" | "pull" )
     git pull
     ;;
@@ -43,7 +46,11 @@ case "$command" in
     git reset --hard origin/$param
     ;;
 "am" | "amend" | "ammend" )
-    git commit -a --amend
+    if [ $param == "now" || $param == "n" ]; then
+	    git commit -a --amend --no-edit
+	else
+        git commit -a --amend
+	fi
     ;;
 "d" | "dif" | "diff" )
     git diff
@@ -52,7 +59,8 @@ case "$command" in
     echo "No command given!"
 	echo ""
     echo "Allowed Commands:"
-	echo "    am   = commit -a --amend"
+	echo "    am   = commit -a --amend (use 'am n' or 'am now' to skip editing the msg)"
+	echo "    c    = commit commit -a"
 	echo "    co   = checkout $2(default master)"
 	echo "    d    = diff"
 	echo "    p    = push to branch $2(default master)"
