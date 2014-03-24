@@ -8,6 +8,16 @@ else
    param=$2
 fi
 
+# See if we are a gerrit or git repo
+remote=$(git config --get remote.origin.url)
+if [[ $remote == *github.com* ]]; then
+    gitType="github"
+elif [[ $remote == *gerrit.wikimedia.org* ]]; then
+    gitType="gerrit"
+else
+    gitType="unknown"
+fi
+
 case "$command" in
 "co" | "checkout" )
     git checkout $param
@@ -16,10 +26,18 @@ case "$command" in
     git pull
     ;;
 "p" | "push" | "publish" )
-    git push origin HEAD:refs/publish/$param
+    if [ $gitType == "github" ]; then
+	    git push origin $param
+	elif [ $gitType == "gerrit" ]; then
+        git push origin HEAD:refs/publish/$param
+	fi
     ;;
 "pd" | "draft" )
-    git push origin HEAD:refs/drafts/$param
+    if [ $gitType == "gerrit" ]; then
+	    git push origin HEAD:refs/drafts/$param
+	else
+	    echo "Unrecognised action for repo type!"
+	fi
     ;;
 "ro" )
     git reset --hard origin/$param
