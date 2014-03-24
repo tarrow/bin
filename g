@@ -45,8 +45,19 @@ case "$command" in
 "am" | "amend" | "ammend" )
     git commit -a --amend
     ;;
+"d" | "dif" | "diff" )
+    git diff
+    ;;
 *)
-    echo "Allowed Commands: p pd am ro pu co"
-    echo "Allowed Param: string, defaults to 'master'"
+    echo "No command given!"
+	echo ""
+    echo "Allowed Commands:"
+	echo "    am   = commit -a --amend"
+	echo "    co   = checkout $2(default master)"
+	echo "    d    = diff"
+	echo "    p    = push to branch $2(default master)"
+	echo "    pd   = push draft to branch $2(default master) (Gerrit only)"
+	echo "    pu   = pull"
+	echo "    ro   = reset --hard to origin/$2(default master)"
     ;;
 esac
