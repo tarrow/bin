@@ -55,6 +55,9 @@ case "$command" in
 "d" | "dif" | "diff" )
     git diff
     ;;
+"msg" )
+    scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg
+    ;;
 *)
     echo "No command given!"
 	echo ""
@@ -67,5 +70,6 @@ case "$command" in
 	echo "    pd   = push draft to branch $2(default master) (Gerrit only)"
 	echo "    pu   = pull"
 	echo "    ro   = reset --hard to origin/$2(default master)"
+	echo "    msg   = scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg
     ;;
 esac
