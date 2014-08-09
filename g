@@ -18,6 +18,37 @@ else
     gitType="unknown"
 fi
 
+#copy pull all commands
+HIGHLIGHT="\e[01;33m"
+NORMAL='\e[00m'
+
+function update {
+  local d="$1"
+  if [ -d "$d" ]; then
+    if [ -e "$d/.ignore" ]; then 
+      echo -e "\n${HIGHLIGHT}Ignoring $d${NORMAL}"
+    else
+      cd $d > /dev/null
+      if [ -d ".git" ]; then
+        echo -e "\n${HIGHLIGHT}Updating `pwd`$NORMAL"
+        git pull &
+      else
+        scan *
+      fi
+      cd .. > /dev/null
+    fi
+  fi
+  #echo "Exiting update: pwd=`pwd`"
+}
+
+function scan {
+  echo -e "\n${HIGHLIGHT}Updating `pwd`$NORMAL"
+  git pull &
+  for x in $*; do
+    update "$x"
+  done
+}
+
 case "$command" in
 "co" | "checkout" )
     git checkout $param
@@ -28,6 +59,13 @@ case "$command" in
 "pu" | "pull" )
     git pull
     ;;
+"pa" | "pullall" )
+	if [ "$2" != "" ]; then cd $2 > /dev/null; fi
+	echo -e "${HIGHLIGHT}Scanning ${PWD}${NORMAL}"
+	scan *
+	wait
+	echo Everything pulled
+	;;
 "p" | "push" | "publish" )
     if [ $gitType == "github" ]; then
         git push origin $param
@@ -84,5 +122,6 @@ case "$command" in
     echo "    re   = rebase"
     echo "    ro   = reset --hard to origin/$2(default master)"
     echo "    msg  = scp -P 29418 PARAM@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg"
+	echo "	  pa   = pull all down the directory tree"
     ;;
 esac
