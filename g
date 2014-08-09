@@ -58,6 +58,9 @@ case "$command" in
 "d" | "dif" | "diff" )
     git diff
     ;;
+"ha" | "hash" )
+    git rev-parse HEAD
+    ;;
 "msg" )
     scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg
     ;;
@@ -69,6 +72,7 @@ case "$command" in
     echo "    c    = commit commit -a"
     echo "    co   = checkout $2(default master)"
     echo "    d    = diff"
+    echo "    ha   = git rev-parse HEAD"
     echo "    p    = push to branch $2(default master)"
     echo "    pd   = push draft to branch $2(default master) (Gerrit only)"
     echo "    pu   = pull"
