@@ -1,3 +1,0 @@
-#!/bin/bash
-
-scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg
