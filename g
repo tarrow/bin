@@ -42,6 +42,9 @@ case "$command" in
 	    echo "Unrecognised action for repo type!"
 	fi
     ;;
+"re" )
+    git rebase origin/$param
+    ;;
 "ro" )
     git reset --hard origin/$param
     ;;
@@ -69,6 +72,7 @@ case "$command" in
 	echo "    p    = push to branch $2(default master)"
 	echo "    pd   = push draft to branch $2(default master) (Gerrit only)"
 	echo "    pu   = pull"
+	echo "    re   = rebase"
 	echo "    ro   = reset --hard to origin/$2(default master)"
 	echo "    msg   = scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg"
     ;;
