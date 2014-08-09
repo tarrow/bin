@@ -46,7 +46,7 @@ case "$command" in
     git reset --hard origin/$param
     ;;
 "am" | "amend" | "ammend" )
-    if [ $param == "now" || $param == "n" ]; then
+    if [ $param == "now" ] || [ $param == "n" ]; then
 	    git commit -a --amend --no-edit
 	else
         git commit -a --amend
