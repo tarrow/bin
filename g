@@ -42,7 +42,7 @@ case "$command" in
 	    echo "Unrecognised action for repo type!"
 	fi
     ;;
-"ro" )
+"re" )
     git rebase origin/$param
     ;;
 "ro" )
