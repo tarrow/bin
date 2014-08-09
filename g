@@ -83,6 +83,6 @@ case "$command" in
     echo "    pu   = pull"
     echo "    re   = rebase"
     echo "    ro   = reset --hard to origin/$2(default master)"
-    echo "    msg  = scp -P 29418 $param@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg"
+    echo "    msg  = scp -P 29418 PARAM@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg"
     ;;
 esac
