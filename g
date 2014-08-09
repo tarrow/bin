@@ -62,7 +62,12 @@ case "$command" in
     git rev-parse HEAD
     ;;
 "msg" )
-    scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg
+    if [ $param == "master" ]; then
+        gitUser="addshore"
+    else
+        gitUser=$param
+    fi
+    scp -P 29418 $gitUser@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg
     ;;
 *)
     echo "No command given!"
@@ -78,6 +83,6 @@ case "$command" in
     echo "    pu   = pull"
     echo "    re   = rebase"
     echo "    ro   = reset --hard to origin/$2(default master)"
-    echo "    msg   = scp -P 29418 addshore@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg"
+    echo "    msg  = scp -P 29418 $param@gerrit.wikimedia.org:hooks/commit-msg .git/hooks/commit-msg"
     ;;
 esac
